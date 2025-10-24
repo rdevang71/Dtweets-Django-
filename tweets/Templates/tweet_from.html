@@ -1,23 +1,34 @@
 {% extends "layout.html" %}
-{% block title %}
-Tweeter By Devang
-{% endblock %}
+{% block title %}Tweeter By Devang{% endblock %}
 
 {% block content %}
-
-
-<h2>
-    {% if form.instance.pk %}
-    Edit Tweet
-    {% else %}
-    Create Tweet
-    {% endif %}
-</h2>
-<form method="post" enctype="multipart/form-data" class="form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-warning">Submit</button>
-</form>
-<a href = "{% url 'tweet_list' %}"> Back to tweets</a>
-
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            {% if form.instance.pk %}
+              ✏️ Edit Tweet
+            {% else %}
+              📝 Create Tweet
+            {% endif %}
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid mt-3">
+              <button type="submit" class="btn btn-warning">🚀 Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center bg-light">
+          <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary btn-sm">⬅️ Back to Tweets</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

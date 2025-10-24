@@ -1,22 +1,29 @@
-{% extends "layout.html" %} {% block title %} Tweeter By Devang {% endblock %}
+{% extends "layout.html" %}
+{% block title %}Tweeter By Devang{% endblock %}
+
 {% block content %}
-<h1 class="text-center m-4">Welcome to Devang's Dtweets</h1>
-<a class="btn btn-pripary" href="{% url 'tweet_create'%}">Create Tweet</a>
-
-<div class="container row gap-3">
-  {% for tweet in tweets %}
-  <div class="card" style="width: 18rem">
-    <img src="{{tweet.photo.url}}" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h5 class="card-title">{{tweet.user.username}}</h5>
-      <p class="card-text">
-        {{tweet.text}}
-      </p>
-      <a href="{% url 'tweet_edit' tweet.id%}" class="btn btn-primary">Edit</a>
-      <a href="{% url 'tweet_delete' tweet.id%}" class="btn btn-danger">delete</a>
-    </div>
+<div class="container py-4">
+  <h1 class="text-center mb-4">Welcome to Devang's Dtweets</h1>
+  <div class="text-center mb-4">
+    <a class="btn btn-primary" href="{% url 'tweet_create' %}">➕ Create New Tweet</a>
   </div>
-  {% endfor %}
-</div>
 
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
+    {% for tweet in tweets %}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet image">
+        <div class="card-body">
+          <h5 class="card-title text-primary fw-bold">{{ tweet.user.username }}</h5>
+          <p class="card-text">{{ tweet.text }}</p>
+        </div>
+        <div class="card-footer bg-white border-0 d-flex justify-content-between">
+          <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-outline-primary btn-sm">✏️ Edit</a>
+          <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-outline-danger btn-sm">🗑️ Delete</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
