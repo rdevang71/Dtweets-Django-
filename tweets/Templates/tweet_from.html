@@ -4,7 +4,20 @@ Tweeter By Devang
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center m-4">
-    Welcome to Devang's Dtweets
-</h1>
+
+
+<h2>
+    {% if form.instance.pk %}
+    Edit Tweet
+    {% else %}
+    Create Tweet
+    {% endif %}
+</h2>
+<form method="post" enctype="multipart/form-data" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-warning">Submit</button>
+</form>
+<a href = "{% url 'tweet_list' %}"> Back to tweets</a>
+
 {% endblock %}

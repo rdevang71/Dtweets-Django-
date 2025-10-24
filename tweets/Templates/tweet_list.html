@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block title %} Tweeter By Devang {% endblock %}
 {% block content %}
 <h1 class="text-center m-4">Welcome to Devang's Dtweets</h1>
-<a class="btn btn-pripary" href="{% url 'tweet_create'%}"></a>
+<a class="btn btn-pripary" href="{% url 'tweet_create'%}">Create Tweet</a>
 
 <div class="container row gap-3">
   {% for tweet in tweets %}
