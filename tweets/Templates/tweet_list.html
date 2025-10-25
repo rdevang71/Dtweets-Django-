@@ -1,29 +1,40 @@
 {% extends "layout.html" %}
+{% load static %}
 {% block title %}Tweeter By Devang{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-  <h1 class="text-center mb-4">Welcome to Devang's Dtweets</h1>
-  <div class="text-center mb-4">
-    <a class="btn btn-primary" href="{% url 'tweet_create' %}">➕ Create New Tweet</a>
-  </div>
+<div class="mb-4 text-center">
+  <h2 class="fw-bold brand-gradient">Latest Tweets</h2>
+  <p class="text-muted">Browse recent posts — images are shown if available.</p>
+</div>
 
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
-    {% for tweet in tweets %}
-    <div class="col">
-      <div class="card h-100 shadow-sm border-0">
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+  {% for tweet in tweets %}
+  <div class="col">
+    <div class="card tweet-card h-100 shadow-sm border-0">
+      {% if tweet.photo %}
         <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet image">
-        <div class="card-body">
-          <h5 class="card-title text-primary fw-bold">{{ tweet.user.username }}</h5>
-          <p class="card-text">{{ tweet.text }}</p>
+      {% else %}
+        <img src="{% static 'images/placeholder.png' %}" class="card-img-top" alt="No image">
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h6 class="card-title mb-0 text-primary fw-bold">{{ tweet.user.username }}</h6>
+          <small class="text-muted">{{ tweet.created_at|date:"M d, Y" }}</small>
         </div>
-        <div class="card-footer bg-white border-0 d-flex justify-content-between">
-          <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-outline-primary btn-sm">✏️ Edit</a>
-          <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-outline-danger btn-sm">🗑️ Delete</a>
+        <p class="card-text text-light mb-3" style="white-space:pre-wrap;">{{ tweet.text }}</p>
+
+        <div class="mt-auto d-flex gap-2">
+          <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-outline-light">✏️ Edit</a>
+          <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-sm btn-outline-danger">🗑️ Delete</a>
         </div>
       </div>
     </div>
-    {% endfor %}
   </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">No tweets yet. <a href="{% url 'tweet_create' %}" class="fw-semibold">Create the first tweet</a>.</div>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}

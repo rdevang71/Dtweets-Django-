@@ -1,32 +1,35 @@
 {% extends "layout.html" %}
+{% load widget_tweaks %}
 {% block title %}Tweeter By Devang{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card shadow-sm border-0">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">
-            {% if form.instance.pk %}
-              ✏️ Edit Tweet
-            {% else %}
-              📝 Create Tweet
-            {% endif %}
-          </h4>
-        </div>
-        <div class="card-body">
-          <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="d-grid mt-3">
-              <button type="submit" class="btn btn-warning">🚀 Submit</button>
-            </div>
-          </form>
-        </div>
-        <div class="card-footer text-center bg-light">
-          <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary btn-sm">⬅️ Back to Tweets</a>
-        </div>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="card form-card shadow-sm border-0">
+      <div class="card-header" style="background: linear-gradient(90deg,#4f9fff,#7b6cff);">
+        <h4 class="mb-0 text-white">
+          {% if form.instance.pk %}✏️ Edit Tweet{% else %}📝 Create Tweet{% endif %}
+        </h4>
+      </div>
+      <div class="card-body bg-dark">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ form.text.label_tag }} 
+            {{ form.text|add_class:"form-control bg-transparent text-light border-secondary" }}
+          </div>
+          <div class="mb-3">
+            {{ form.photo.label_tag }}
+            {{ form.photo|add_class:"form-control form-control-sm bg-transparent text-light border-secondary" }}
+            <small class="text-muted">Optional — upload an image (jpg/png)</small>
+          </div>
+          <div class="d-grid mt-3">
+            <button type="submit" class="btn btn-accent">🚀 Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer text-center bg-transparent border-0">
+        <a href="{% url 'tweet_list' %}" class="btn btn-outline-light btn-sm">⬅️ Back to Tweets</a>
       </div>
     </div>
   </div>

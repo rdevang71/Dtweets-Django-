@@ -5,47 +5,121 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
     <title>{% block title %}Dtweets{% endblock %}</title>
+
+    <style>
+      :root{
+        --bg-1:#071226;
+        --bg-2:#0b1b2b;
+        --accent-1:#4f9fff;
+        --accent-2:#7b6cff;
+        --muted:#b7c3d6;
+      }
+
+      html,body{height:100%}
+      body{
+        min-height:100%;
+        margin:0;
+        font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+        background: linear-gradient(160deg,var(--bg-1),var(--bg-2));
+        color:var(--muted);
+        padding-top:76px; /* space for fixed navbar */
+      }
+
+      .navbar{
+        background: linear-gradient(90deg, rgba(11,27,43,0.95), rgba(8,12,20,0.9));
+        backdrop-filter: blur(6px);
+      }
+
+      .brand-gradient{
+        background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight:700;
+        letter-spacing:0.6px;
+      }
+
+      /* card styles */
+      .tweet-card{
+        border-radius:12px;
+        overflow:hidden;
+        transition: transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .18s ease;
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+      }
+      .tweet-card:hover{
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 14px 40px rgba(2,6,23,0.7);
+      }
+      .card-img-top{
+        height:200px;
+        object-fit:cover;
+        display:block;
+        width:100%;
+        background:linear-gradient(90deg,rgba(0,0,0,0.25),rgba(0,0,0,0.1));
+      }
+
+      /* subtle pulse for create button */
+      .btn-accent{
+        background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+        color:#fff;
+        border:0;
+        box-shadow: 0 6px 18px rgba(79,159,255,0.12);
+      }
+      .btn-accent:hover{ transform: translateY(-2px); }
+
+      footer{ color:var(--muted); padding:2rem 0 3rem; }
+
+      /* form card */
+      .form-card{
+        border-radius:12px;
+        overflow:hidden;
+      }
+
+      /* small responsive tweaks */
+      @media (max-width:576px){
+        .card-img-top{ height:160px }
+      }
+    </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="{% url 'tweet_list' %}">Dtweets</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+    <nav class="navbar fixed-top navbar-expand-lg shadow-sm">
+      <div class="container">
+        <a class="navbar-brand brand-gradient" href="{% url 'tweet_list' %}">Dtweets</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <div class="collapse navbar-collapse" id="navMain">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'tweet_list' %}">Home</a>
+              <a class="nav-link text-muted" href="{% url 'tweet_list' %}">Tweets</a>
             </li>
-            {% if user.is_authenticated %}
+            <li class="nav-item d-none d-lg-block">
+              <a class="nav-link text-muted" href="{% url 'tweet_list' %}">Home</a>
+            </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'tweet_create' %}">Create Tweet</a>
+              <a class="btn btn-sm btn-accent ms-2" href="{% url 'tweet_create' %}">➕ Create Tweet</a>
             </li>
-            {% endif %}
           </ul>
 
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <form class="d-flex me-3" role="search" method="get" action="{% url 'tweet_list' %}">
+            <input class="form-control form-control-sm me-2 bg-dark text-light border-0" name="q" type="search" placeholder="Search tweets" aria-label="Search">
+            <button class="btn btn-sm btn-outline-light" type="submit">Search</button>
+          </form>
+
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
             {% if user.is_authenticated %}
-            <li class="nav-item">
-              <span class="nav-link">👋 {{ user.username }}</span>
+            <li class="nav-item me-2">
+              <a class="nav-link text-muted" href="#"><span class="me-1">👋</span>{{ user.username }}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
+              <a class="nav-link text-danger" href="{% url 'logout_page' %}">Logout</a>
             </li>
             {% else %}
             <li class="nav-item">
@@ -60,8 +134,16 @@
       </div>
     </nav>
 
-    <div class="container py-4">
+    <main class="container my-4">
       {% block content %}{% endblock %}
-    </div>
+    </main>
+
+    <footer class="text-center">
+      <div class="container">
+        <small>Dtweets — Demo app by Devang• Built with Django and  Bootstrap</small>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   </body>
 </html>

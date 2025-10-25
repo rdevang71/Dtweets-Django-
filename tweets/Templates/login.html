@@ -1,40 +1,38 @@
 {% extends "layout.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <form class="card p-4 shadow-lg rounded" method="POST">
-        {% csrf_token %}
-        <h2 class="text-center mb-4 text-primary">Login</h2>
-        <hr>
-
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6">
+    <form class="card form-card p-0 shadow-lg" method="POST">
+      {% csrf_token %}
+      <div style="background: linear-gradient(90deg,#4f9fff,#7b6cff);" class="p-4 text-white text-center">
+        <h2 class="mb-0">Login</h2>
+      </div>
+      <div class="card-body bg-dark">
         <div class="mb-3">
-          <label for="email" class="form-label fw-semibold">Email address</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+          <label for="email" class="form-label fw-semibold text-muted">Email address</label>
+          <input type="email" class="form-control bg-transparent text-light border-secondary" id="email" name="email" required>
         </div>
 
         <div class="mb-3">
-          <label for="password" class="form-label fw-semibold">Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+          <label for="password" class="form-label fw-semibold text-muted">Password</label>
+          <input type="password" class="form-control bg-transparent text-light border-secondary" id="password" name="password" required>
         </div>
 
-        <div class="form-check mb-3">
+        <div class="form-check mb-3 text-muted">
           <input class="form-check-input" type="checkbox" id="remember" name="remember">
-          <label class="form-check-label" for="remember">
-            Remember me
-          </label>
+          <label class="form-check-label" for="remember">Remember me</label>
         </div>
 
-        <div class="d-grid gap-2 col-6 mx-auto mt-4">
-          <button type="submit" class="btn btn-success btn-lg">Login</button>
+        <div class="d-grid gap-2 col-6 mx-auto mt-3">
+          <button type="submit" class="btn btn-accent btn-lg">Login</button>
         </div>
 
         <div class="text-center mt-3">
-          <p class="mb-0">Don't have an account? <a href="{% url 'register_page' %}" class="text-decoration-none text-primary">Register here</a></p>
+          <p class="mb-0 text-muted">Don't have an account? <a href="{% url 'register_page' %}" class="brand-gradient text-decoration-none">Register</a></p>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
 {% endblock %}

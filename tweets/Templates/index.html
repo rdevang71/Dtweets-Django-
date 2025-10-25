@@ -2,15 +2,13 @@
 {% block title %}Tweeter By Devang{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8 text-center">
-      <div class="card shadow-sm border-0">
-        <div class="card-body">
-          <h1 class="display-5 fw-bold text-primary mb-3">Welcome to Devang's Dtweets</h1>
-          <p class="lead">Your personal space to share thoughts, moments, and snapshots with the world.</p>
-          <a href="{% url 'tweet_list' %}" class="btn btn-outline-primary mt-3">🚀 View Tweets</a>
-        </div>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-9 col-lg-7">
+    <div class="card form-card shadow-sm border-0">
+      <div class="card-body text-center" style="background: linear-gradient(90deg, rgba(79,159,255,0.06), rgba(123,108,255,0.05));">
+        <h1 class="display-5 fw-bold brand-gradient mb-3">Welcome to Devang's Dtweets</h1>
+        <p class="lead text-muted mb-4">Share moments, thoughts and images. Built for quick demos and learning.</p>
+        <a href="{% url 'tweet_list' %}" class="btn btn-accent btn-lg">🚀 View Tweets</a>
       </div>
     </div>
   </div>
